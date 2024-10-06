@@ -23,7 +23,6 @@ object processFile {
       case false if curLine < fileLimit=> splitFile(xs, fileLimit, curLine+1, fileNum,shardDir, content+xs.next())
       case false => {
 
-        println(content)
         createAndWriteFile(content, shardDir + "shard" + fileNum + ".txt")
         splitFile(xs, fileLimit, 0, fileNum+1, shardDir, "")
       }
