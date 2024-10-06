@@ -14,7 +14,8 @@ Class repository for CS441 on Cloud Computing taught at the University of Illino
 ---
 ## Instructions
 ___
-### prerequisites:
+## Video :
+> https://www.youtube.com/watch?v=URqDp_ij9r4&ab_channel=LeiChen
 
 ___
 1. clone the repository into Intelliji IDE
