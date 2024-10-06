@@ -7,7 +7,8 @@ import scala.annotation.tailrec
 import scala.util.Using
 
 object processFile {
-
+  val myConf = ConfigFactory.load().getConfig("myTokenEmbeddingConfig")
+  val numMapper = myConf.getInt("mapper")
   def createAndWriteFile(str: String,name:String ): Unit= {
     val file = new File(name)
     file.createNewFile();
@@ -26,9 +27,10 @@ object processFile {
         createAndWriteFile(content, shardDir + "shard" + fileNum + ".txt")
         splitFile(xs, fileLimit, 0, fileNum+1, shardDir, "")
       }
-      case true => {
+      case true if (numMapper > fileNum)=> {
         createAndWriteFile(content, shardDir + "shard" + fileNum + ".txt")
       }
+      case true => {Nil}
     }
   }
 
@@ -40,9 +42,9 @@ object processFile {
 
     Using(scala.io.Source.fromFile(rawInput)) { reader => {
       val source = reader.getLines()
-      val myConf = ConfigFactory.load().getConfig("myTokenEmbeddingConfig")
 
-      val fileLength = totalLines / myConf.getInt("mapper")
+
+      val fileLength = totalLines / numMapper
 
       splitFile(source, fileLength, 0, 0,shardDir,"")
     }
